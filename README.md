@@ -46,50 +46,59 @@ Rare diseases suffer from a severe lack of annotated medical images due to low p
 ## 📁 Project Folder Structure
 
 ```
-
-
 Final_year_Project/
 │
-├── data/                                  # SINGLE SOURCE OF TRUTH
-│   ├── disease_1/
-│   │   ├── real/
-│   │   ├── synthetic/
-│   │   └── real_plus_synthetic/
+├── diseases_Data/                         # DATA MANAGEMENT
+│   ├── raw_data/                          # Original images
+│   │   ├── Moyamoya Disease with Intraventricular Hemorrhage/
+│   │   ├── Neurofibromatosis Type 1 (NF1)/
+│   │   ├── Optic Glioma/
+│   │   ├── Tuberous Sclerosis/
+│   │   └── normal/
 │   │
-│   ├── disease_2/
-│   │   ├── real/
-│   │   ├── synthetic/
-│   │   └── real_plus_synthetic/
+│   ├── refined_data/                      # Processed/cleaned images
+│   │   ├── Moyamoya Disease with Intraventricular Hemorrhage/
+│   │   ├── Neurofibromatosis Type 1 (NF1)/
+│   │   ├── Optic Glioma/
+│   │   └── Tuberous Sclerosis/
 │   │
-│   └── disease_3/
-│       ├── real/
-│       ├── synthetic/
-│       └── real_plus_synthetic/
+│   └── code_for_refining_data/
+│       └── code_for_refine.py
 │
-├── module_1_lora/                         # SYNTHETIC IMAGE GENERATION
-│   ├── disease_1/
-│   │   ├── train_lora.py
-│   │   ├── generate_images.py             # SAVES INTO data/
-│   │   ├── prompts.txt
-│   │   └── lora_weights/
+├── module_1_lora_SYNTHETIC IMAGE GENERATION/  # SYNTHETIC IMAGE GENERATION
+│   ├── code for module/
+│   │   ├── LoRa_training.ipynb            # Train LoRA models
+│   │   ├── LOAD_LoRA_&_GENERATE_IMAGES.ipynb  # Generate synthetic images
+│   │   └── images_to_png.py               # Image format conversion
 │   │
-│   ├── disease_2/
-│   └── disease_3/
+│   ├── module1 complete process and workflow.txt
+│   │
+│   ├── Moyamoya Disease with Intraventricular Hemorrhage/
+│   │   └── lora_files/                    # Trained LoRA weights
+│   │
+│   ├── Neurofibromatosis Type 1 (NF1)/
+│   │   └── lora_files/                    # Trained LoRA weights
+│   │
+│   ├── Optic Glioma/
+│   │   └── lora_files/                    # Trained LoRA weights
+│   │
+│   └── Tuberous Sclerosis/
+│       └── lora_files/                    # Trained LoRA weights
 │
-├── module_2_training/                     # COMMON CLASSIFIER TRAINING
-│   ├── train_classifier.py                # COMMON CODE
-│   ├── evaluate_model.py
-│   ├── config.yaml
-│   ├── saved_models/
-│   │   ├── disease_1_model.pt
-│   │   ├── disease_2_model.pt
-│   │   └── disease_3_model.pt
+├── module_2_disease classifier/           # DISEASE CLASSIFICATION
+│   ├── Optic Glioma/
+│   │   ├── disease_images/                # Disease sample images
+│   │   ├── normal_images/                 # Normal sample images
+│   │   ├── train/                         # Training dataset
+│   │   ├── val/                           # Validation dataset
+│   │   └── test/                          # Test dataset
 │   │
-│   └── utils/
-│       ├── dataset_loader.py
-│       ├── preprocessing.py
-│       ├── model_builder.py
-│       └── metrics.py
+│   ├── Optic Glioma.ipynb                 # Classification training notebook
+│   │
+│   └── Module2_Results/
+│       ├── accuracy_results.txt           # Performance metrics
+│       ├── model_real_Optic Glioma.h5
+│       └── model_real_Tuberous_Sclerosis.h5
 │
 ├── module_3_application/                  # INFERENCE + USER INTERFACE
 │   ├── backend/
