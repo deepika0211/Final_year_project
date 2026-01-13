@@ -1,0 +1,133 @@
+┌─────────────────────────────────────────────┐
+│   Raw Medical Image Dataset                 │
+│ (JPEG / JPG / BMP / TIFF / Mixed Formats)   │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ Image Preprocessing & Standardization       │
+│ - Format Conversion → PNG                  │
+│ - Lossless Compression                     │
+│ - Channel Normalization                    │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ Refined Dataset (PNG Images)                │
+│ Ready for Diffusion Training                │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ Load Pretrained Stable Diffusion Model      │
+│ (Frozen Base Weights)                       │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ LoRA-based Fine-Tuning                      │
+│ - Inject Low-Rank Adapters                  │
+│ - Train Attention Layers Only               │
+│ - Disease-Specific Feature Learning         │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ Save LoRA Adapter Parameters                │
+│ - adapter_model.safetensors                 │
+│ - adapter_config.json                       │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ Load Base Model + LoRA Adapter (Inference)  │
+│ - Dynamic Weight Injection                  │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ Text-to-Image Diffusion Inference           │
+│ - Prompt Encoding (CLIP)                    │
+│ - Latent Noise Sampling                     │
+│ - Iterative Denoising (U-Net + LoRA)        │
+│ - VAE Decoding                              │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ Synthetic Medical Image Generation          │
+│ (Disease-Specific Images)                  │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ Ordered Image Storage                       │
+│ - Disease-wise Folders                     │
+│ - Indexed Naming Convention                │
+│ - Metadata Consistency                     │
+└─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│ Final Synthetic Dataset                     │
+│ Ready for Classification & Evaluation       │
+└─────────────────────────────────────────────┘
+
+
+1. Overview of Module-1
+
+Module-1 focuses on the generation of high-quality synthetic medical images using a text-to-image diffusion framework. Due to the limited availability of real-world medical data for rare diseases, this module leverages Stable Diffusion fine-tuned with Low-Rank Adaptation (LoRA) to learn disease-specific visual patterns and generate realistic synthetic images. The generated dataset is later used to support disease classification and model training in subsequent modules.
+
+2. Dataset Refinement and Standardization
+
+The initial dataset consisted of medical images collected from multiple sources in heterogeneous formats such as JPEG, JPG, BMP, and TIFF. Since diffusion models require uniform and consistent input formats, a preprocessing phase was implemented.
+
+All images were converted into PNG format, ensuring lossless compression and preservation of critical medical features. This step also ensured consistent color channels and eliminated corrupted or incompatible samples. Standardizing the dataset reduced noise and prevented distortion of anatomical patterns during training.
+
+Output of this stage: A refined and standardized PNG-based medical image dataset.
+
+3. LoRA-Based Fine-Tuning of Stable Diffusion
+
+Instead of retraining the Stable Diffusion model from scratch, which is computationally expensive, Low-Rank Adaptation (LoRA) was employed to efficiently fine-tune the model for disease-specific image synthesis.
+
+A pretrained Stable Diffusion base model was loaded with its original weights frozen. LoRA layers were injected into the cross-attention and projection layers of the U-Net architecture. During training, only the low-rank matrices introduced by LoRA were updated, allowing the model to learn disease-specific visual representations without altering the base model parameters.
+
+This approach significantly reduced GPU memory usage, accelerated convergence, and prevented overfitting, making it highly suitable for limited medical datasets.
+
+Output of this stage: A domain-adapted diffusion model capable of generating disease-specific images.
+
+4. Saving LoRA Adapter Parameters
+
+After successful fine-tuning, the learned LoRA parameters were saved independently from the base Stable Diffusion model. The adapter files included:
+
+LoRA weight tensors, representing the learned low-rank adaptations.
+
+Configuration files, containing metadata such as rank, scaling factors, and target layers.
+
+By storing only the LoRA adapters, the system enables reusability and portability, allowing the same base model to be combined with different disease-specific adapters during inference.
+
+Output of this stage: Portable LoRA configuration and weight files.
+
+5. Loading LoRA for Diffusion Inference
+
+During the image generation phase, the pretrained Stable Diffusion base model was loaded along with the saved LoRA adapters. The LoRA weights were dynamically injected into the attention layers at inference time.
+
+This process allows the base model to remain unchanged while the LoRA adapters guide the diffusion process to emphasize disease-specific features. Multiple LoRA adapters can be swapped without retraining the base model, making the system scalable and modular.
+
+Output of this stage: Inference-ready diffusion pipeline enhanced with disease knowledge.
+
+6. Synthetic Image Generation using Stable Diffusion
+
+Synthetic medical images were generated using a text-to-image diffusion process. Textual prompts describing disease characteristics were encoded using a CLIP text encoder. The model then performed iterative denoising in latent space using the U-Net architecture enhanced by LoRA adapters.
+
+Key parameters such as inference steps, guidance scale, and random seeds were controlled to ensure reproducibility and diversity in generated images. The final latent outputs were decoded into image space using a Variational Autoencoder (VAE).
+
+Output of this stage: High-quality synthetic medical images aligned with disease conditions.
+
+7. Ordered Storage of Generated Images
+
+The generated images were systematically stored using a structured directory hierarchy. Images were organized disease-wise and named sequentially to maintain traceability and facilitate downstream processing.
+
+This organized storage approach ensures compatibility with classification pipelines, simplifies dataset expansion, and supports reproducible experimentation.
+
+Final Output of Module-1: A well-organized synthetic medical image dataset ready for disease classification and evaluation.
