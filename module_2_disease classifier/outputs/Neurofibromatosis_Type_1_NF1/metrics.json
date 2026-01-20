@@ -1,0 +1,14 @@
+{
+    "real": {
+        "val_accuracy": 85.0,
+        "test_accuracy": 82.0
+    },
+    "synthetic": {
+        "val_accuracy": 86.0,
+        "test_accuracy": 83.0
+    },
+    "combined": {
+        "val_accuracy": 86.0,
+        "test_accuracy": 84.0
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "Moyamoya_Disease_with_Intraventricular_Hemorrhage": {
+        "train": {
+            "disease": 604,
+            "normal": 604
+        },
+        "val": {
+            "disease": 130,
+            "normal": 130
+        },
+        "test": {
+            "disease": 130,
+            "normal": 130
+        }
+    },
+    "Neurofibromatosis_Type_1_NF1": {
+        "train": {
+            "disease": 671,
+            "normal": 671
+        },
+        "val": {
+            "disease": 144,
+            "normal": 144
+        },
+        "test": {
+            "disease": 145,
+            "normal": 145
+        }
+    },
+    "Optic_Glioma": {
+        "train": {
+            "disease": 346,
+            "normal": 346
+        },
+        "val": {
+            "disease": 75,
+            "normal": 75
+        },
+        "test": {
+            "disease": 75,
+            "normal": 75
+        }
+    },
+    "Tuberous_Sclerosis": {
+        "train": {
+            "disease": 464,
+            "normal": 464
+        },
+        "val": {
+            "disease": 100,
+            "normal": 100
+        },
+        "test": {
+            "disease": 100,
+            "normal": 100
+        }
+    }
+}
