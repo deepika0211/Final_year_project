@@ -1,14 +1,14 @@
 {
     "real": {
-        "val_accuracy": 100.0,
-        "test_accuracy": 100.0
+        "val_accuracy": 86.95,
+        "test_accuracy": 84.01
     },
     "synthetic": {
-        "val_accuracy": 100.0,
-        "test_accuracy": 100.0
+        "val_accuracy": 85.61,
+        "test_accuracy": 86.79
     },
     "combined": {
-        "val_accuracy": 98.89,
-        "test_accuracy": 100.0
+        "val_accuracy": 84.78,
+        "test_accuracy": 86.43
     }
 }
